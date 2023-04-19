@@ -28,11 +28,4 @@ public class UserDto {
      */
     @ApiModelProperty(value = "昵称", required = true)
     private String nickname;
-
-    /**
-     * 邮箱
-     */
-    @ApiModelProperty(value = "邮箱")
-    private String email;
-
 }

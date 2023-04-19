@@ -6,9 +6,9 @@ import com.example.eebighomework.dto.UserDto;
 import com.example.eebighomework.model.User;
 import com.example.eebighomework.service.UserService;
 //import com.example.eebighomework.util.JwtUtil;
+import com.example.eebighomework.util.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,18 +45,18 @@ public class UserController {
         return R.success("注册成功");
     }
 
-//    /**
-//     * 用户登录
-//     *
-//     * @param userDto 用户信息
-//     * @return 登录结果
-//     */
-//    @PostMapping("/login")
-//    @ApiOperation(value = "用户登录")
-//    public R<?> login(@RequestBody UserDto userDto) {
-//        User user = userService.login(userDto.getUsername(), userDto.getPassword());
-//        String token = JwtUtil.generateToken(user.getId().toString());
-//        return R.success(token);
-//    }
+    /**
+     * 用户登录
+     *
+     * @param userDto 用户信息
+     * @return 登录结果
+     */
+    @PostMapping("/login")
+    @ApiOperation(value = "用户登录")
+    public R<?> login(@RequestBody UserDto userDto) {
+        User user = userService.login(userDto.getUsername(), userDto.getPassword());
+        String token = JwtUtil.generateToken(user.getId().toString());
+        return R.success(token);
+    }
 
 }

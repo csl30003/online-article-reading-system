@@ -9,5 +9,4 @@ public class EeBigHomeworkApplication {
     public static void main(String[] args) {
         SpringApplication.run(EeBigHomeworkApplication.class, args);
     }
-
 }
