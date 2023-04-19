@@ -4,10 +4,10 @@ CREATE TABLE `user`
     `username`    varchar(255) NOT NULL COMMENT '用户名',
     `password`    varchar(255) NOT NULL COMMENT '密码',
     `nickname`    varchar(255) NOT NULL COMMENT '昵称',
-    `email`       varchar(255) DEFAULT NULL COMMENT '邮箱',
+    `email`       varchar(255)          DEFAULT NULL COMMENT '邮箱',
     `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `delete_time` datetime     DEFAULT NULL COMMENT '删除时间',
+    `delete_time` datetime              DEFAULT NULL COMMENT '删除时间',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
@@ -20,9 +20,9 @@ CREATE TABLE `article`
     `like`        int          NOT NULL DEFAULT 0 COMMENT '点赞数量',
     `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `delete_time` datetime     DEFAULT NULL COMMENT '删除时间',
+    `delete_time` datetime              DEFAULT NULL COMMENT '删除时间',
     PRIMARY KEY (`id`),
-    KEY           `fk_user_id` (`user_id`),
+    KEY           `fk_user_id_article` (`user_id`),
     CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
@@ -34,12 +34,12 @@ CREATE TABLE `comment`
     `article_id`  int          NOT NULL COMMENT '文章id',
     `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `delete_time` datetime     DEFAULT NULL COMMENT '删除时间',
+    `delete_time` datetime              DEFAULT NULL COMMENT '删除时间',
     PRIMARY KEY (`id`),
-    KEY           `fk_user_id` (`user_id`),
-    KEY           `fk_article_id` (`article_id`),
-    CONSTRAINT `fk_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY           `fk_user_id_comment` (`user_id`),
+    KEY           `fk_article_id_comment` (`article_id`),
+    CONSTRAINT `fk_article_id_comment` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_user_id_comment` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
 
 CREATE TABLE `like`
@@ -49,10 +49,10 @@ CREATE TABLE `like`
     `article_id`  int      NOT NULL COMMENT '文章id',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `delete_time` datetime     DEFAULT NULL COMMENT '删除时间',
+    `delete_time` datetime          DEFAULT NULL COMMENT '删除时间',
     PRIMARY KEY (`id`),
-    KEY           `fk_user_id` (`user_id`),
-    KEY           `fk_article_id` (`article_id`),
-    CONSTRAINT `fk_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY           `fk_user_id_like` (`user_id`),
+    KEY           `fk_article_id_like` (`article_id`),
+    CONSTRAINT `fk_article_id_like` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_user_id_like` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';

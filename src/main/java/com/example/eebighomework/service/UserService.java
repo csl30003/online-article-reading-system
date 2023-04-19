@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.eebighomework.exception.BaseException;
 import com.example.eebighomework.mapper.UserMapper;
 import com.example.eebighomework.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +17,8 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 用户注册
@@ -31,7 +34,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if (count(queryWrapper) > 0) {
             throw new BaseException("用户名已存在");
         }
-        save(user);
+        userMapper.insertUser(user);
     }
 
     /**
