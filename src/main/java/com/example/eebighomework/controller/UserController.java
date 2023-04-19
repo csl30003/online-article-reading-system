@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 用户控制器
@@ -41,8 +43,11 @@ public class UserController {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setNickname(userDto.getNickname());
-        userService.register(user);
-        return R.success("注册成功");
+        String temp = userService.register(user);
+        if(Objects.equals(temp, "")){
+            return R.success("注册成功");
+        }
+        return R.error(temp);
     }
 
     /**
@@ -55,6 +60,9 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     public R<String> login(@RequestBody UserDto userDto) {
         User user = userService.login(userDto.getUsername(), userDto.getPassword());
+        if (user == null){
+            return R.error("登录失败");
+        }
         String token = JwtUtil.generateToken(user.getId().toString());
         return R.success(token);
     }
