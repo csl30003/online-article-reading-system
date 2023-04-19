@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)

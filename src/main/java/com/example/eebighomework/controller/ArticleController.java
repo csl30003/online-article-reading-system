@@ -1,7 +1,11 @@
 package com.example.eebighomework.controller;
 
+import com.example.eebighomework.common.R;
+import com.example.eebighomework.service.ArticleService;
+import com.example.eebighomework.vo.ArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "文章相关接口")
 public class ArticleController {
 
-//    @Autowired
-//    private ArticleService articleService;
+    @Autowired
+    private ArticleService articleService;
 //
 //    /**
 //     * 获取文章列表
@@ -42,6 +46,9 @@ public class ArticleController {
     @ApiOperation(value = "获取文章详情")
     public R<ArticleVo> get(@PathVariable Integer id) {
         ArticleVo result = articleService.get(id);
+        if(result == null){
+            return R.error("无法获取文章详情");
+        }
         return R.success(result);
     }
 
