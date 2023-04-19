@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.eebighomework.exception.BaseException;
 import com.example.eebighomework.mapper.UserMapper;
 import com.example.eebighomework.model.User;
+import com.example.eebighomework.util.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -34,6 +35,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if (count(queryWrapper) > 0) {
             throw new BaseException("用户名已存在");
         }
+        // 对密码加密
+        user.setPassword(EncryptUtil.encrypt(user.getPassword()));
+
         userMapper.insertUser(user);
     }
 
@@ -46,7 +50,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     public User login(String username, String password) {
         QueryWrapper<User> queryWrapper = Wrappers.query();
-        queryWrapper.eq("username", username).eq("password", password);
+        // 对密码加密
+        String encryptPassword = EncryptUtil.encrypt(password);
+        queryWrapper.eq("username", username).eq("password", encryptPassword);
         User user = getOne(queryWrapper);
         if (user == null) {
             throw new BaseException("用户名或密码错误");

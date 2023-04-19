@@ -53,10 +53,9 @@ public class UserController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
-    public R<?> login(@RequestBody UserDto userDto) {
+    public R<String> login(@RequestBody UserDto userDto) {
         User user = userService.login(userDto.getUsername(), userDto.getPassword());
         String token = JwtUtil.generateToken(user.getId().toString());
         return R.success(token);
     }
-
 }
