@@ -132,7 +132,7 @@ public class ArticleController {
         likes.setArticleId(id);
         Integer userId= (Integer) request.getAttribute("userId");
         likes.setUserId(userId);
-
+        articleService.insertlike(likes);
         articleService.like(id);
         return R.success("点赞成功");
     }
@@ -144,10 +144,11 @@ public class ArticleController {
      * @param id 文章id
      * @return 取消点赞结果
      */
-    @DeleteMapping("/{id}/like")
+    @PostMapping("/{id}/cancellike")
     @ApiOperation(value = "取消点赞文章")
     public R<String> cancelLike(@PathVariable Integer id) {
         articleService.cancelLike(id);
+        articleService.unlike(id);
         return R.success("取消点赞成功");
     }
 }

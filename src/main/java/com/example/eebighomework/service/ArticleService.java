@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.Likes;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,14 @@ public class ArticleService {
     }
 
     /**
+     * 添加likes表数据
+     * @param likes
+     */
+    public void insertlike(Likes likes){
+        articleMapper.insertLikes(likes);
+    }
+
+    /**
      * LISIZT
      * 取消点赞文章
      *
@@ -104,5 +113,14 @@ public class ArticleService {
     public void cancelLike(Integer id) {
         articleMapper.updateLikeCount(id, -1);
     }
+
+    /**
+     * like表里删除
+     * @param id
+     */
+    public void unlike(Integer id) {
+        articleMapper.deleteLikes(id);
+    }
 }
-    public void insertlike()
+
+

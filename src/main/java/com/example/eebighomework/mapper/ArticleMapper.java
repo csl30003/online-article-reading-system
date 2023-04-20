@@ -57,7 +57,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param id    文章id
      * @param count 点赞数变化量
      */
-    @Update("update article set like_count=like_count+#{count} where id=#{id}")
+    @Update("update article set likes=likes+#{count} where id=#{id}")
     void updateLikeCount(@Param("id") Integer id, @Param("count") Integer count);
 
     /**
@@ -65,8 +65,11 @@ public interface ArticleMapper extends BaseMapper<Article> {
      *
      * @param likes 点赞记录
      */
-    @Insert("insert into likes(article_id, user_id, create_time) values(#{articleId}, #{userId}, )")
+    @Insert("INSERT INTO likes (user_id, article_id) " +
+            "VALUES (#{userId}, #{articleId})")
     void insertLikes(Likes likes);
+    @Update("update likes set delete_time=NOW() where id=#{id}")
+    void deleteLikes(@Param("id") Integer id);
 
     /**
      * 查询文章详情
