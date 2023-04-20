@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.vo.ArticleVo;
+import com.example.eebighomework.vo.CommentVo;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,20 +17,20 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-//    /**
-//     * 查询文章评论列表
-//     *
-//     * @param articleId 文章id
-//     * @return 评论列表
-//     */
-//    @Select("select c.id, c.content, c.create_time, u.nickname from comment c left join user u on c.user_id=u.id where c.article_id=#{articleId} order by c.create_time desc")
-//    @Results(id="commentVoMap", value={
-//            @Result(column="id", property="id"),
-//            @Result(column="content", property="content"),
-//            @Result(column="create_time", property="createTime"),
-//            @Result(column="nickname", property="nickname")
-//    })
-//    List<CommentVo> selectCommentVoList(@Param("articleId") Integer articleId);
+    /**
+     * 查询文章评论列表
+     *
+     * @param articleId 文章id
+     * @return 评论列表
+     */
+    @Select("select c.id, c.content, c.create_time, u.nickname from comment c left join user u on c.user_id=u.id where c.article_id=#{articleId} order by c.create_time desc")
+    @Results(id="commentVo", value={
+            @Result(column="id", property="id"),
+            @Result(column="content", property="content"),
+            @Result(column="create_time", property="createTime"),
+            @Result(column="nickname", property="nickname")
+    })
+    List<CommentVo> selectCommentVoList(@Param("articleId") Integer articleId);
 //
 //    /**
 //     * 查询文章排行榜
@@ -74,11 +77,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     ArticleVo selectArticleVoById(@Param("id") Integer id);
 
-
-
-
-
-    
 
 
 

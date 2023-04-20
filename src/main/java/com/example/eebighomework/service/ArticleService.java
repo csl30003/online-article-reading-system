@@ -7,8 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.vo.ArticleVo;
+import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ArticleService {
@@ -44,16 +47,16 @@ public class ArticleService {
         return articleMapper.selectArticleVoById(id);
     }
 
-//    /**
-//     * 获取文章评论列表
-//     *
-//     * @param id 文章id
-//     * @return 评论列表
-//     */
-//    public List<CommentVo> comment(Integer id) {
-//        return articleMapper.selectCommentVoList(id);
-//    }
-//
+    /**
+     * 获取文章评论列表
+     *
+     * @param id 文章id
+     * @return 评论列表
+     */
+    public List<CommentVo> comment(Integer id) {
+        return articleMapper.selectCommentVoList(id);
+    }
+
 //    /**
 //     * 上传文章
 //     *

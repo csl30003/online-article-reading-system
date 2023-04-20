@@ -5,10 +5,13 @@ import com.example.eebighomework.common.R;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
+import com.example.eebighomework.vo.CommentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/article")
@@ -51,19 +54,19 @@ public class ArticleController {
         }
         return R.success(result);
     }
-//
-//    /**
-//     * 获取文章评论列表
-//     *
-//     * @param id 文章id
-//     * @return 评论列表
-//     */
-//    @GetMapping("/{id}/comment")
-//    @ApiOperation(value = "获取文章评论列表")
-//    public R<List<CommentVo>> comment(@PathVariable Integer id) {
-//        List<CommentVo> result = articleService.comment(id);
-//        return R.success(result);
-//    }
+
+    /**
+     * 获取文章评论列表
+     *
+     * @param id 文章id
+     * @return 评论列表
+     */
+    @GetMapping("/{id}/comment")
+    @ApiOperation(value = "获取文章评论列表")
+    public R<List<CommentVo>> comment(@PathVariable Integer id) {
+        List<CommentVo> result = articleService.comment(id);
+        return R.success(result);
+    }
 
 //    /**
 //     * 上传文章
