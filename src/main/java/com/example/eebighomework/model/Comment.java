@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
@@ -30,6 +31,11 @@ public class Comment implements Serializable {
      * 文章id
      */
     private Integer articleId;
+
+    /**
+     * 用户id
+     */
+    private Integer userId;
 
     /**
      * 评论内容

@@ -2,7 +2,10 @@ package com.example.eebighomework.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.common.R;
+import com.example.eebighomework.dto.ArticleDto;
+import com.example.eebighomework.dto.CommentDto;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.Comment;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
@@ -11,6 +14,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -68,39 +73,43 @@ public class ArticleController {
         return R.success(result);
     }
 
-//    /**
-//     * 上传文章
-//     *
-//     * @param articleDto 文章信息
-//     * @return 上传结果
-//     */
-//    @PostMapping
-//    @ApiOperation(value = "上传文章")
-//    public R<String> upload(@RequestBody ArticleDto articleDto) {
-//        Article article = new Article();
-//        article.setTitle(articleDto.getTitle());
-//        article.setContent(articleDto.getContent());
-//        articleService.upload(article);
-//        return R.success("上传成功");
-//    }
-//
-//    /**
-//     * 评论文章
-//     *
-//     * @param id        文章id
-//     * @param commentDto 评论信息
-//     * @return 评论结果
-//     */
-//    @PostMapping("/{id}/comment")
-//    @ApiOperation(value = "评论文章")
-//    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto) {
-//        Comment comment = new Comment();
-//        comment.setArticleId(id);
-//        comment.setContent(commentDto.getContent());
-//        articleService.comment(comment);
-//        return R.success("评论成功");
-//    }
-//
+    /**
+     * 上传文章
+     *
+     * @param articleDto 文章信息
+     * @return 上传结果
+     */
+    @PostMapping("/upload")
+    @ApiOperation(value = "上传文章")
+    public R<String> upload(@RequestBody ArticleDto articleDto, HttpServletRequest request) {
+        Article article = new Article();
+        article.setTitle(articleDto.getTitle());
+        article.setContent(articleDto.getContent());
+        Integer userId = (Integer) request.getAttribute("userId");
+        article.setUserId(userId);
+        articleService.upload(article);
+        return R.success("上传成功");
+    }
+
+    /**
+     * 评论文章
+     *
+     * @param id        文章id
+     * @param commentDto 评论信息
+     * @return 评论结果
+     */
+    @PostMapping("/{id}/commentUpload")
+    @ApiOperation(value = "评论文章")
+    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto,HttpServletRequest request) {
+        Comment comment = new Comment();
+        comment.setArticleId(id);
+        comment.setContent(commentDto.getContent());
+        Integer userId = (Integer) request.getAttribute("userId");
+        comment.setUserId(userId);
+        articleService.comment(comment);
+        return R.success("评论成功");
+    }
+
 //    /**
 //     * 获取文章排行榜
 //     *

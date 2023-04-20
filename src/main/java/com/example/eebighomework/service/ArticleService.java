@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.Comment;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,24 +58,24 @@ public class ArticleService {
         return articleMapper.selectCommentVoList(id);
     }
 
-//    /**
-//     * 上传文章
-//     *
-//     * @param article 文章信息
-//     */
-//    public void upload(Article article) {
-//        articleMapper.insert(article);
-//    }
-//
-//    /**
-//     * 评论文章
-//     *
-//     * @param comment 评论信息
-//     */
-//    public void comment(Comment comment) {
-//        articleMapper.insertComment(comment);
-//    }
-//
+    /**
+     * 上传文章
+     *
+     * @param article 文章信息
+     */
+    public void upload(Article article) {
+        articleMapper.insertArticle(article);
+    }
+
+    /**
+     * 评论文章
+     *
+     * @param comment 评论信息
+     */
+    public void comment(Comment comment) {
+        articleMapper.insertComment(comment);
+    }
+
 //    /**
 //     * 获取文章排行榜
 //     *
