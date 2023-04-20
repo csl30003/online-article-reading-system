@@ -2,6 +2,7 @@ package com.example.eebighomework.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.common.R;
+import com.example.eebighomework.dto.ArticleDto;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
@@ -68,21 +69,21 @@ public class ArticleController {
         return R.success(result);
     }
 
-//    /**
-//     * 上传文章
-//     *
-//     * @param articleDto 文章信息
-//     * @return 上传结果
-//     */
-//    @PostMapping
-//    @ApiOperation(value = "上传文章")
-//    public R<String> upload(@RequestBody ArticleDto articleDto) {
-//        Article article = new Article();
-//        article.setTitle(articleDto.getTitle());
-//        article.setContent(articleDto.getContent());
-//        articleService.upload(article);
-//        return R.success("上传成功");
-//    }
+    /**王伟写
+     * 上传文章
+     *
+     * @param articleDto 文章信息
+     * @return 上传结果
+     */
+    @PostMapping("/upload")
+    @ApiOperation(value = "上传文章")
+    public R<String> upload(@RequestBody ArticleDto articleDto) {
+        Article article = new Article();
+        article.setTitle(articleDto.getTitle());
+        article.setContent(articleDto.getContent());
+        articleService.upload(article);
+        return R.success("上传成功");
+    }
 //
 //    /**
 //     * 评论文章

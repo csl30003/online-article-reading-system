@@ -3,9 +3,11 @@ package com.example.eebighomework.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.User;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,8 +16,10 @@ import java.util.List;
  * 文章 Mapper 接口
  * </p>
  */
+@Repository
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
+
 
     /**
      * 查询文章评论列表

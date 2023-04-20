@@ -36,7 +36,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
         //判断用户名是否已存在，如果用户名存在但是deletetime不为空，代表该用户已被删除，可以添加
         QueryWrapper<User> queryWrapper = Wrappers.query();
-        queryWrapper.eq("username", user.getUsername()).isNotNull("delete_time");
+        queryWrapper.eq("username", user.getUsername()).isNull("delete_time");
         if (count(queryWrapper) > 0) {
             return "用户名已存在";
         }

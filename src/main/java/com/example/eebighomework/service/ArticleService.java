@@ -57,15 +57,15 @@ public class ArticleService {
         return articleMapper.selectCommentVoList(id);
     }
 
-//    /**
-//     * 上传文章
-//     *
-//     * @param article 文章信息
-//     */
-//    public void upload(Article article) {
-//        articleMapper.insert(article);
-//    }
-//
+    /**王伟
+     * 上传文章
+     *
+     * @param article 文章信息
+     */
+    public void upload(Article article) {
+        articleMapper.insert(article);
+    }
+
 //    /**
 //     * 评论文章
 //     *
