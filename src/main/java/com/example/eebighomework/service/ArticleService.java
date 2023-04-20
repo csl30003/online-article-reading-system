@@ -115,8 +115,8 @@ public class ArticleService {
     }
 
     /**
-     * like表里删除
-     * @param id
+     * 删除likes表数据（逻辑）
+     * @param id 文章id
      */
     public void unlike(Integer id) {
         articleMapper.deleteLikes(id);

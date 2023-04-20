@@ -68,6 +68,11 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Insert("INSERT INTO likes (user_id, article_id) " +
             "VALUES (#{userId}, #{articleId})")
     void insertLikes(Likes likes);
+
+    /**
+     * 删除点赞记录
+     * @param id
+     */
     @Update("update likes set delete_time=NOW() where id=#{id}")
     void deleteLikes(@Param("id") Integer id);
 
