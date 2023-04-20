@@ -1,5 +1,9 @@
 package com.example.eebighomework.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.vo.ArticleVo;
@@ -11,24 +15,24 @@ public class ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
-//
-//    /**
-//     * 获取文章列表
-//     *
-//     * @param page    页码
-//     * @param size    每页条数
-//     * @param keyword 关键词
-//     * @return 文章列表
-//     */
-//    public Page<Article> list(Integer page, Integer size, String keyword) {
-//        Page<Article> pager = new Page<>(page, size);
-//        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-//        if (StringUtils.isNotEmpty(keyword)) {
-//            queryWrapper.like("title", keyword);
-//        }
-//        queryWrapper.orderByDesc("create_time");
-//        return articleMapper.selectPage(pager, queryWrapper);
-//    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param page    页码
+     * @param size    每页条数
+     * @param keyword 关键词
+     * @return 文章列表
+     */
+    public Page<Article> list(Integer page, Integer size, String keyword) {
+        Page<Article> pager = new Page<>(page, size);
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(keyword)) {
+            queryWrapper.like("title", keyword);
+        }
+        queryWrapper.orderByDesc("create_time");
+        return articleMapper.selectPage(pager, queryWrapper);
+    }
 
     /**
      * 获取文章详情

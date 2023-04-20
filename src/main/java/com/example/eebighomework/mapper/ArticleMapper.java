@@ -1,6 +1,7 @@
 package com.example.eebighomework.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.vo.ArticleVo;
 import org.apache.ibatis.annotations.*;
@@ -58,19 +59,28 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return 文章详情
      */
     //注意API响应属性集内顺序与下面搜索的属性对应
-    @Select("select a.id, a.title, a.content, a.create_time,a.update_time, a.like, a.user_id, u.username, u.nickname from article a left join user u on a.user_id=u.id where a.id=#{id}")
+    //这里的a. u. 是表名的简写，用于区分
+    @Select("select a.id, a.title, a.content, a.create_time,a.update_time, a.likes, a.user_id, u.username, u.nickname from article a left join user u on a.user_id=u.id where a.id=#{id}")
     @Results(id="articleVo", value={
             @Result(column="id", property="id"),
             @Result(column="title", property="title"),
             @Result(column="content", property="content"),
             @Result(column="create_time", property="createTime"),
             @Result(column="update_time", property="updateTime"),
-            @Result(column="like", property="like"),
+            @Result(column="likes", property="likes"),
             @Result(column="user_id", property="userId"),
             @Result(column="username", property="username"),
             @Result(column="nickname", property="nickname")
     })
     ArticleVo selectArticleVoById(@Param("id") Integer id);
+
+
+
+
+
+    
+
+
 
 //    /**
 //     * 评论文章

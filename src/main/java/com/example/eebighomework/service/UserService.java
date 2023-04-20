@@ -28,11 +28,15 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param user 用户信息
      */
     public String register(User user) {
+        // 判断用户名和密码是否为空
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             return "用户名或密码不能为空";
         }
+
+
+        //判断用户名是否已存在，如果用户名存在但是deletetime不为空，代表该用户已被删除，可以添加
         QueryWrapper<User> queryWrapper = Wrappers.query();
-        queryWrapper.eq("username", user.getUsername());
+        queryWrapper.eq("username", user.getUsername()).isNotNull("delete_time");
         if (count(queryWrapper) > 0) {
             return "用户名已存在";
         }
@@ -54,7 +58,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         QueryWrapper<User> queryWrapper = Wrappers.query();
         // 对密码加密
         String encryptPassword = EncryptUtil.encrypt(password);
-        queryWrapper.eq("username", username).eq("password", encryptPassword);
+        //搜索用户，可能会有重名，加上delete time = null判断用户是否存在
+        queryWrapper.eq("username", username).eq("password", encryptPassword).isNull("delete_time");
         User user = getOne(queryWrapper);
         if (user == null) {
             return null;

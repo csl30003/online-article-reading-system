@@ -39,7 +39,7 @@ public class Article implements Serializable {
     /**
      * 点赞数
      */
-    private Integer likeCount;
+    private Integer likes;
 
     /**
      * 用户id
@@ -50,7 +50,7 @@ public class Article implements Serializable {
      * 上传时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime uploadTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新时间

@@ -1,15 +1,14 @@
 package com.example.eebighomework.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.common.R;
+import com.example.eebighomework.model.Article;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/article")
@@ -18,23 +17,24 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
-//
-//    /**
-//     * 获取文章列表
-//     *
-//     * @param page    页码
-//     * @param size    每页条数
-//     * @param keyword 关键词
-//     * @return 文章列表
-//     */
-//    @GetMapping("/list")
-//    @ApiOperation(value = "获取文章列表")
-//    public R<Page<Article>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-//                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
-//                                 @RequestParam(value = "keyword", required = false) String keyword) {
-//        Page<Article> result = articleService.list(page, size, keyword);
-//        return R.success(result);
-//    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param page    页码
+     * @param size    每页条数
+     * @param keyword 关键词
+     * @return 文章列表
+     */
+    @GetMapping("/list")
+    @ApiOperation(value = "获取文章列表")
+    //keyword 设置为false，不是必填项
+    public R<Page<Article>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                 @RequestParam(value = "keyword", required = false) String keyword) {
+        Page<Article> result = articleService.list(page, size, keyword);
+        return R.success(result);
+    }
 
     /**
      * 获取文章详情
@@ -51,7 +51,7 @@ public class ArticleController {
         }
         return R.success(result);
     }
-
+//
 //    /**
 //     * 获取文章评论列表
 //     *
@@ -64,7 +64,7 @@ public class ArticleController {
 //        List<CommentVo> result = articleService.comment(id);
 //        return R.success(result);
 //    }
-//
+
 //    /**
 //     * 上传文章
 //     *
