@@ -85,22 +85,24 @@ public class ArticleService {
 //        return articleMapper.selectRank(type);
 //    }
 //
-//    /**
-//     * 点赞文章
-//     *
-//     * @param id 文章id
-//     */
-//    public void like(Integer id) {
-//        articleMapper.updateLikeCount(id, 1);
-//    }
-//
-//    /**
-//     * 取消点赞文章
-//     *
-//     * @param id 文章id
-//     */
-//    public void cancelLike(Integer id) {
-//        articleMapper.updateLikeCount(id, -1);
-//    }
-}
+    /**
+     * LISIZT
+     * 点赞文章
+     *
+     * @param id 文章id
+     */
+    public void like(Integer id) {
+        articleMapper.updateLikeCount(id, 1);
+    }
 
+    /**
+     * LISIZT
+     * 取消点赞文章
+     *
+     * @param id 文章id
+     */
+    public void cancelLike(Integer id) {
+        articleMapper.updateLikeCount(id, -1);
+    }
+}
+    public void insertlike()

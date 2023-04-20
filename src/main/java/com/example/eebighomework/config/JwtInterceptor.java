@@ -27,7 +27,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (!jwtUtil.validateToken(token)) {
             throw new RuntimeException("未授权访问");
         }
-        String userId = jwtUtil.getUserIdFromToken(token);
+        int userId = Integer.parseInt(jwtUtil.getUserIdFromToken(token));
         request.setAttribute("userId", userId);
         return true;
     }
