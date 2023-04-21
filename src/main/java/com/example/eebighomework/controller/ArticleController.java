@@ -2,6 +2,7 @@ package com.example.eebighomework.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.common.R;
+import com.example.eebighomework.dto.ArticleDto;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
