@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Comment;
 import com.example.eebighomework.model.User;
+import com.example.eebighomework.model.Likes;
+import com.example.eebighomework.model.User;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.apache.ibatis.annotations.*;
@@ -32,6 +34,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Insert("INSERT INTO article (title, content, user_id) " +
             "VALUES ( #{title}, #{content},#{userId})")
     void insertArticle(Article article);
+
 
     /**
      * 查询文章评论列表
@@ -62,14 +65,30 @@ public interface ArticleMapper extends BaseMapper<Article> {
 //    })
 //    List<ArticleRankVo> selectRank(@Param("type") String type);
 //
-//    /**
-//     * 更新文章点赞数
-//     *
-//     * @param id    文章id
-//     * @param count 点赞数变化量
-//     */
-//    @Update("update article set like_count=like_count+#{count} where id=#{id}")
-//    void updateLikeCount(@Param("id") Integer id, @Param("count") Integer count);
+    /**
+     * 更新文章点赞数
+     *
+     * @param id    文章id
+     * @param count 点赞数变化量
+     */
+    @Update("update article set likes=likes+#{count} where id=#{id}")
+    void updateLikeCount(@Param("id") Integer id, @Param("count") Integer count);
+
+    /**
+     * 插入点赞记录
+     *
+     * @param likes 点赞记录
+     */
+    @Insert("INSERT INTO likes (user_id, article_id) " +
+            "VALUES (#{userId}, #{articleId})")
+    void insertLikes(Likes likes);
+
+    /**
+     * 删除点赞记录
+     * @param id
+     */
+    @Update("update likes set delete_time=NOW() where id=#{id}")
+    void deleteLikes(@Param("id") Integer id);
 
     /**
      * 查询文章详情

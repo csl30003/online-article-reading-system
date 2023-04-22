@@ -5,6 +5,7 @@ import com.example.eebighomework.common.R;
 import com.example.eebighomework.dto.ArticleDto;
 import com.example.eebighomework.dto.CommentDto;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.Likes;
 import com.example.eebighomework.model.Comment;
 import com.example.eebighomework.service.ArticleService;
 import com.example.eebighomework.vo.ArticleVo;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -123,29 +126,37 @@ public class ArticleController {
 //        return R.success(result);
 //    }
 //
-//    /**
-//     * 点赞文章
-//     *
-//     * @param id 文章id
-//     * @return 点赞结果
-//     */
-//    @PostMapping("/{id}/like")
-//    @ApiOperation(value = "点赞文章")
-//    public R<String> like(@PathVariable Integer id) {
-//        articleService.like(id);
-//        return R.success("点赞成功");
-//    }
-//
-//    /**
-//     * 取消点赞文章
-//     *
-//     * @param id 文章id
-//     * @return 取消点赞结果
-//     */
-//    @DeleteMapping("/{id}/like")
-//    @ApiOperation(value = "取消点赞文章")
-//    public R<String> cancelLike(@PathVariable Integer id) {
-//        articleService.cancelLike(id);
-//        return R.success("取消点赞成功");
-//    }
+    /**
+     * LISIZT
+     * 点赞文章
+     *
+     * @param id 文章id
+     * @return 点赞结果
+     */
+    @PostMapping("/{id}/like")
+    @ApiOperation(value = "点赞文章")
+    public R<String> like(@PathVariable Integer id , HttpServletRequest request) {
+        Likes likes = new Likes();
+        likes.setArticleId(id);
+        Integer userId= (Integer) request.getAttribute("userId");
+        likes.setUserId(userId);
+        articleService.insertlike(likes);
+        articleService.like(id);
+        return R.success("点赞成功");
+    }
+
+    /**
+     * LISIZT
+     * 取消点赞文章
+     *
+     * @param id 文章id
+     * @return 取消点赞结果
+     */
+    @PostMapping("/{id}/cancellike")
+    @ApiOperation(value = "取消点赞文章")
+    public R<String> cancelLike(@PathVariable Integer id) {
+        articleService.cancelLike(id);
+        articleService.unlike(id);
+        return R.success("取消点赞成功");
+    }
 }

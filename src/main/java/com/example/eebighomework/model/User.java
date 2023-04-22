@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("user")
 public class User implements Serializable {
