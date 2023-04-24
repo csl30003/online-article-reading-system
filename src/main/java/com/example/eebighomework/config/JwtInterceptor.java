@@ -1,10 +1,9 @@
 package com.example.eebighomework.config;
 
-import com.example.eebighomework.common.R;
+
 import com.example.eebighomework.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

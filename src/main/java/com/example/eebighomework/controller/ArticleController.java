@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/article")
@@ -40,11 +40,17 @@ public class ArticleController {
     @GetMapping("/list")
     @ApiOperation(value = "获取文章列表")
     //keyword 设置为false，不是必填项
-    public R<Page<Article>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+    public R<Map<String, Object>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                  @RequestParam(value = "size", defaultValue = "10") Integer size,
                                  @RequestParam(value = "keyword", required = false) String keyword) {
         Page<Article> result = articleService.list(page, size, keyword);
-        return R.success(result);
+
+// 将 Page 对象转换为 Map 对象
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("content", result.getRecords());
+
+
+        return R.success(resultMap);
     }
 
     /**
