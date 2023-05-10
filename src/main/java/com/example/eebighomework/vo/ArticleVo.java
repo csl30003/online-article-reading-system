@@ -15,7 +15,7 @@ public class ArticleVo {
     private String content;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-    private Integer like;
+    private Integer likes;
     private Integer userId;
     private String username;
     private String nickname;
