@@ -28,7 +28,6 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         String token = request.getHeader("Authorization");
-        System.out.println(token);
         if (token == null) {
             throw new RuntimeException("未授权访问");
         }
