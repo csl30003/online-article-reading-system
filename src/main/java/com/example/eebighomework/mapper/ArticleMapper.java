@@ -19,6 +19,22 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
 
 
+    /**
+     * 查询文章列表
+     *
+     *
+     *
+     */
+
+
+
+
+
+
+
+
+
+
 
 
     /**

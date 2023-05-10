@@ -45,9 +45,13 @@ public class ArticleController {
                                  @RequestParam(value = "keyword", required = false) String keyword) {
         Page<Article> result = articleService.list(page, size, keyword);
 
-// 将 Page 对象转换为 Map 对象
+    // 将 Page 对象转换为 Map 对象，要保持和json要求格式一致
         Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("total",result.getTotal());
         resultMap.put("ArticleList", result.getRecords());
+
+
+
 
 
         return R.success(resultMap);
