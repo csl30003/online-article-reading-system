@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
+import com.example.eebighomework.model.Comment;
+import com.example.eebighomework.model.Likes;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,24 +59,24 @@ public class ArticleService {
         return articleMapper.selectCommentVoList(id);
     }
 
-//    /**
-//     * 上传文章
-//     *
-//     * @param article 文章信息
-//     */
-//    public void upload(Article article) {
-//        articleMapper.insert(article);
-//    }
-//
-//    /**
-//     * 评论文章
-//     *
-//     * @param comment 评论信息
-//     */
-//    public void comment(Comment comment) {
-//        articleMapper.insertComment(comment);
-//    }
-//
+    /**
+     * 上传文章
+     *
+     * @param article 文章信息
+     */
+    public void upload(Article article) {
+        articleMapper.insertArticle(article);
+    }
+
+    /**
+     * 评论文章
+     *
+     * @param comment 评论信息
+     */
+    public void comment(Comment comment) {
+        articleMapper.insertComment(comment);
+    }
+
 //    /**
 //     * 获取文章排行榜
 //     *
@@ -85,22 +87,40 @@ public class ArticleService {
 //        return articleMapper.selectRank(type);
 //    }
 //
-//    /**
-//     * 点赞文章
-//     *
-//     * @param id 文章id
-//     */
-//    public void like(Integer id) {
-//        articleMapper.updateLikeCount(id, 1);
-//    }
-//
-//    /**
-//     * 取消点赞文章
-//     *
-//     * @param id 文章id
-//     */
-//    public void cancelLike(Integer id) {
-//        articleMapper.updateLikeCount(id, -1);
-//    }
+    /**
+     * LISIZT
+     * 点赞文章
+     *
+     * @param id 文章id
+     */
+    public void like(Integer id) {
+        articleMapper.updateLikeCount(id, 1);
+    }
+
+    /**
+     * 添加likes表数据
+     * @param likes
+     */
+    public void insertlike(Likes likes){
+        articleMapper.insertLikes(likes);
+    }
+
+    /**
+     * LISIZT
+     * 取消点赞文章
+     *
+     * @param id 文章id
+     */
+    public void cancelLike(Integer id) {
+        articleMapper.updateLikeCount(id, -1);
+    }
+
+    /**
+     * 删除likes表数据（逻辑）
+     * @param id 文章id
+     */
+    public void unlike(Integer id) {
+        articleMapper.deleteLikes(id);
+    }
 }
 

@@ -12,11 +12,6 @@ import lombok.Data;
 @Data
 public class ArticleDto {
 
-    /**
-     * 文章id
-     */
-    @ApiModelProperty(value = "文章id", required = true)
-    private Integer id;
 
     /**
      * 标题
