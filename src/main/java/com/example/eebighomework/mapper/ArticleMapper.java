@@ -1,12 +1,9 @@
 package com.example.eebighomework.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Comment;
-import com.example.eebighomework.model.User;
 import com.example.eebighomework.model.Likes;
-import com.example.eebighomework.model.User;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.apache.ibatis.annotations.*;

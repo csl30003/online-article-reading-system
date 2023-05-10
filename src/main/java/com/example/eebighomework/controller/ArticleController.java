@@ -47,7 +47,7 @@ public class ArticleController {
 
 // 将 Page 对象转换为 Map 对象
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("content", result.getRecords());
+        resultMap.put("ArticleList", result.getRecords());
 
 
         return R.success(resultMap);
