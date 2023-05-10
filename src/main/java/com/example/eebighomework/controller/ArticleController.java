@@ -41,11 +41,11 @@ public class ArticleController {
     @ApiOperation(value = "获取文章列表")
     //keyword 设置为false，不是必填项
     public R<Map<String, Object>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                 @RequestParam(value = "keyword", required = false) String keyword) {
+                                       @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                       @RequestParam(value = "keyword", required = false) String keyword) {
         Page<Article> result = articleService.list(page, size, keyword);
 
-// 将 Page 对象转换为 Map 对象
+        // 将 Page 对象转换为 Map 对象
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("content", result.getRecords());
 
@@ -63,7 +63,7 @@ public class ArticleController {
     @ApiOperation(value = "获取文章详情")
     public R<ArticleVo> get(@PathVariable Integer id) {
         ArticleVo result = articleService.get(id);
-        if(result == null){
+        if (result == null) {
             return R.error("无法获取文章详情");
         }
         return R.success(result);
@@ -103,13 +103,13 @@ public class ArticleController {
     /**
      * 评论文章
      *
-     * @param id        文章id
+     * @param id         文章id
      * @param commentDto 评论信息
      * @return 评论结果
      */
     @PostMapping("/{id}/commentUpload")
     @ApiOperation(value = "评论文章")
-    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto,HttpServletRequest request) {
+    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
         Comment comment = new Comment();
         comment.setArticleId(id);
         comment.setContent(commentDto.getContent());
@@ -132,6 +132,7 @@ public class ArticleController {
 //        return R.success(result);
 //    }
 //
+
     /**
      * LISIZT
      * 点赞文章
@@ -141,10 +142,10 @@ public class ArticleController {
      */
     @PostMapping("/{id}/like")
     @ApiOperation(value = "点赞文章")
-    public R<String> like(@PathVariable Integer id , HttpServletRequest request) {
+    public R<String> like(@PathVariable Integer id, HttpServletRequest request) {
         Likes likes = new Likes();
         likes.setArticleId(id);
-        Integer userId= (Integer) request.getAttribute("userId");
+        Integer userId = (Integer) request.getAttribute("userId");
         likes.setUserId(userId);
         articleService.insertlike(likes);
         articleService.like(id);
