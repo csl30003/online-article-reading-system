@@ -3,11 +3,10 @@ package com.example.eebighomework.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.common.R;
 import com.example.eebighomework.dto.ArticleDto;
-import com.example.eebighomework.dto.CommentDto;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Likes;
-import com.example.eebighomework.model.Comment;
 import com.example.eebighomework.service.ArticleService;
+import com.example.eebighomework.vo.ArticleRankVo;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import io.swagger.annotations.Api;
@@ -15,11 +14,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/article")
@@ -40,17 +37,11 @@ public class ArticleController {
     @GetMapping("/list")
     @ApiOperation(value = "获取文章列表")
     //keyword 设置为false，不是必填项
-    public R<Map<String, Object>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                       @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                       @RequestParam(value = "keyword", required = false) String keyword) {
+    public R<Page<Article>> list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                 @RequestParam(value = "keyword", required = false) String keyword) {
         Page<Article> result = articleService.list(page, size, keyword);
-
-        // 将 Page 对象转换为 Map 对象
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("content", result.getRecords());
-
-
-        return R.success(resultMap);
+        return R.success(result);
     }
 
     /**
@@ -63,7 +54,7 @@ public class ArticleController {
     @ApiOperation(value = "获取文章详情")
     public R<ArticleVo> get(@PathVariable Integer id) {
         ArticleVo result = articleService.get(id);
-        if (result == null) {
+        if(result == null){
             return R.error("无法获取文章详情");
         }
         return R.success(result);
@@ -82,7 +73,7 @@ public class ArticleController {
         return R.success(result);
     }
 
-    /**
+    /**王伟写
      * 上传文章
      *
      * @param articleDto 文章信息
@@ -90,48 +81,44 @@ public class ArticleController {
      */
     @PostMapping("/upload")
     @ApiOperation(value = "上传文章")
-    public R<String> upload(@RequestBody ArticleDto articleDto, HttpServletRequest request) {
+    public R<String> upload(@RequestBody ArticleDto articleDto) {
         Article article = new Article();
         article.setTitle(articleDto.getTitle());
         article.setContent(articleDto.getContent());
-        Integer userId = (Integer) request.getAttribute("userId");
-        article.setUserId(userId);
         articleService.upload(article);
         return R.success("上传成功");
     }
-
-    /**
-     * 评论文章
-     *
-     * @param id         文章id
-     * @param commentDto 评论信息
-     * @return 评论结果
-     */
-    @PostMapping("/{id}/commentUpload")
-    @ApiOperation(value = "评论文章")
-    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
-        Comment comment = new Comment();
-        comment.setArticleId(id);
-        comment.setContent(commentDto.getContent());
-        Integer userId = (Integer) request.getAttribute("userId");
-        comment.setUserId(userId);
-        articleService.comment(comment);
-        return R.success("评论成功");
-    }
-
+//
 //    /**
-//     * 获取文章排行榜
+//     * 评论文章
 //     *
-//     * @param type 排行榜类型：daily、weekly、monthly
-//     * @return 排行榜
+//     * @param id        文章id
+//     * @param commentDto 评论信息
+//     * @return 评论结果
 //     */
-//    @GetMapping("/rank/{type}")
-//    @ApiOperation(value = "获取文章排行榜")
-//    public R<List<ArticleRankVo>> rank(@PathVariable String type) {
-//        List<ArticleRankVo> result = articleService.rank(type);
-//        return R.success(result);
+//    @PostMapping("/{id}/comment")
+//    @ApiOperation(value = "评论文章")
+//    public R<String> comment(@PathVariable Integer id, @RequestBody CommentDto commentDto) {
+//        Comment comment = new Comment();
+//        comment.setArticleId(id);
+//        comment.setContent(commentDto.getContent());
+//        articleService.comment(comment);
+//        return R.success("评论成功");
 //    }
 //
+    /**
+     * LISIZT
+     * 获取文章排行榜
+     *
+     * @param days 排行榜类型：daily、weekly、monthly
+     * @return 排行榜
+     */
+    @GetMapping("/rank/{days}")
+    @ApiOperation(value = "获取文章排行榜")
+    public R<List<ArticleRankVo>> rank(@PathVariable Integer days) {
+        List<ArticleRankVo> result = articleService.rank(days);
+        return R.success(result);
+    }
 
     /**
      * LISIZT
@@ -142,10 +129,10 @@ public class ArticleController {
      */
     @PostMapping("/{id}/like")
     @ApiOperation(value = "点赞文章")
-    public R<String> like(@PathVariable Integer id, HttpServletRequest request) {
+    public R<String> like(@PathVariable Integer id , HttpServletRequest request) {
         Likes likes = new Likes();
         likes.setArticleId(id);
-        Integer userId = (Integer) request.getAttribute("userId");
+        Integer userId= (Integer) request.getAttribute("userId");
         likes.setUserId(userId);
         articleService.insertlike(likes);
         articleService.like(id);
