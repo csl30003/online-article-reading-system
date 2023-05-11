@@ -6,6 +6,7 @@ import com.example.eebighomework.dto.ArticleDto;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Likes;
 import com.example.eebighomework.service.ArticleService;
+import com.example.eebighomework.vo.ArticleRankVo;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import io.swagger.annotations.Api;
@@ -105,19 +106,20 @@ public class ArticleController {
 //        return R.success("评论成功");
 //    }
 //
-//    /**
-//     * 获取文章排行榜
-//     *
-//     * @param type 排行榜类型：daily、weekly、monthly
-//     * @return 排行榜
-//     */
-//    @GetMapping("/rank/{type}")
-//    @ApiOperation(value = "获取文章排行榜")
-//    public R<List<ArticleRankVo>> rank(@PathVariable String type) {
-//        List<ArticleRankVo> result = articleService.rank(type);
-//        return R.success(result);
-//    }
-//
+    /**
+     * LISIZT
+     * 获取文章排行榜
+     *
+     * @param days 排行榜类型：daily、weekly、monthly
+     * @return 排行榜
+     */
+    @GetMapping("/rank/{days}")
+    @ApiOperation(value = "获取文章排行榜")
+    public R<List<ArticleRankVo>> rank(@PathVariable Integer days) {
+        List<ArticleRankVo> result = articleService.rank(days);
+        return R.success(result);
+    }
+
     /**
      * LISIZT
      * 点赞文章

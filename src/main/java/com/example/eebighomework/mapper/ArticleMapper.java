@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Likes;
 import com.example.eebighomework.model.User;
+import com.example.eebighomework.vo.ArticleRankVo;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.apache.ibatis.annotations.*;
@@ -36,21 +37,25 @@ public interface ArticleMapper extends BaseMapper<Article> {
             @Result(column="nickname", property="nickname")
     })
     List<CommentVo> selectCommentVoList(@Param("articleId") Integer articleId);
-//
-//    /**
-//     * 查询文章排行榜
-//     *
-//     * @param type 排行榜类型：daily、weekly、monthly
-//     * @return 排行榜
-//     */
-//    @Select("select id, title, like_count from article where date(create_time)=date_sub(curdate(), interval 1 #{type}) order by like_count desc limit 10")
-//    @Results(id="articleRankVoMap", value={
-//            @Result(column="id", property="id"),
-//            @Result(column="title", property="title"),
-//            @Result(column="like_count", property="likeCount")
-//    })
-//    List<ArticleRankVo> selectRank(@Param("type") String type);
-//
+
+    /**
+     * 查询文章排行榜
+     *
+     * @param days 排行榜类型：DAY,WEEK,MONTH
+     * @return 排行榜
+     */
+    @Select("SELECT id, title, likes\n" +
+            "FROM article\n" +
+            "WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY) \n" +
+            "ORDER BY likes DESC\n" +
+            "LIMIT 10")
+    @Results(id="articleRankVo", value={
+            @Result(column="id", property="id"),
+            @Result(column="title", property="title"),
+            @Result(column="likes", property="likes")
+    })
+    List<ArticleRankVo> selectRank(@Param("days") Integer days);
+
     /**
      * 更新文章点赞数
      *

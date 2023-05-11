@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.eebighomework.mapper.ArticleMapper;
 import com.example.eebighomework.model.Article;
 import com.example.eebighomework.model.Likes;
+import com.example.eebighomework.vo.ArticleRankVo;
 import com.example.eebighomework.vo.ArticleVo;
 import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,16 +77,17 @@ public class ArticleService {
 //        articleMapper.insertComment(comment);
 //    }
 //
-//    /**
-//     * 获取文章排行榜
-//     *
-//     * @param type 排行榜类型：daily、weekly、monthly
-//     * @return 排行榜
-//     */
-//    public List<ArticleRankVo> rank(String type) {
-//        return articleMapper.selectRank(type);
-//    }
-//
+    /**
+     * LISIZT
+     * 获取文章排行榜
+     *
+     * @param days 排行榜类型：daily、weekly、monthly
+     * @return 排行榜
+     */
+    public List<ArticleRankVo> rank(Integer days) {
+        return articleMapper.selectRank(days);
+    }
+
     /**
      * LISIZT
      * 点赞文章
