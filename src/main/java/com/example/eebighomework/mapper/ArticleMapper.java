@@ -92,8 +92,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 删除点赞记录
      * @param id
      */
-    @Update("update likes set delete_time=NOW() where id=#{id}")
-    void deleteLikes(@Param("id") Integer id);
+    @Update("update likes set delete_time=NOW() where article_id=#{articleId} and user_id=#{userId}")
+    void deleteLikes(@Param("articleId") Integer articleId,@Param("userId") Integer userId);
+
+    /**
+     * 查找已点赞记录
+     * @param id
+     */
+    @Select("select * from likes where article_id=#{article_id} and user_id=#{userId} and delete_time is null")
+    Likes selectLikes(@Param("article_id") Integer id,@Param("userId")Integer userId);
 
     /**
      * 查询文章详情

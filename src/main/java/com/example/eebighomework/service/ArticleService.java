@@ -13,12 +13,13 @@ import com.example.eebighomework.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class ArticleService {
 
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
     /**
@@ -120,8 +121,16 @@ public class ArticleService {
      * 删除likes表数据（逻辑）
      * @param id 文章id
      */
-    public void unlike(Integer id) {
-        articleMapper.deleteLikes(id);
+    public void unlike(Integer id,Integer userid) {
+        articleMapper.deleteLikes(id,userid);
+    }
+    /**
+     * 查找likes表数据
+     * @param id 文章id
+     */
+    public Likes selectlike(Integer id,Integer userid) {
+        Likes likes=articleMapper.selectLikes(id,userid);
+        return likes;
     }
 }
 

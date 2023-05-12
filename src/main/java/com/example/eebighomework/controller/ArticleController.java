@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.rmi.runtime.NewThreadAction;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -130,13 +131,19 @@ public class ArticleController {
     @PostMapping("/{id}/like")
     @ApiOperation(value = "点赞文章")
     public R<String> like(@PathVariable Integer id , HttpServletRequest request) {
-        Likes likes = new Likes();
-        likes.setArticleId(id);
-        Integer userId= (Integer) request.getAttribute("userId");
-        likes.setUserId(userId);
-        articleService.insertlike(likes);
-        articleService.like(id);
-        return R.success("点赞成功");
+        Integer userId = (Integer) request.getAttribute("userId");
+        Likes likes = articleService.selectlike(id,userId);
+        if ( likes == null) {
+            Likes likes1 = new Likes();
+            likes1.setArticleId(id);
+            likes1.setUserId(userId);
+            articleService.insertlike(likes1);
+            articleService.like(id);
+            return R.ok("点赞成功");
+        }
+        else {
+            return R.error("点赞失败");
+        }
     }
 
     /**
@@ -148,9 +155,16 @@ public class ArticleController {
      */
     @PostMapping("/{id}/cancellike")
     @ApiOperation(value = "取消点赞文章")
-    public R<String> cancelLike(@PathVariable Integer id) {
-        articleService.cancelLike(id);
-        articleService.unlike(id);
-        return R.success("取消点赞成功");
+    public R<String> cancelLike(@PathVariable Integer id, HttpServletRequest request) {
+        Integer userId = (Integer) request.getAttribute("userId");
+        Likes likes = articleService.selectlike(id,userId);
+        if (likes!=null){
+            articleService.cancelLike(id);
+            articleService.unlike(id,userId);
+            return R.ok("取消点赞成功");
+        }
+        else {
+            return R.error("取消点赞失败");
+        }
     }
 }
