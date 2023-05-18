@@ -22,14 +22,8 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-
-
-
     /**
      * 上传文章
-     *
-     *
-     *
      */
 
     @Insert("INSERT INTO article (title, content, user_id) " +
@@ -90,7 +84,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 删除点赞记录
-     * @param id
+     * @param
      */
     @Update("update likes set delete_time=NOW() where article_id=#{articleId} and user_id=#{userId}")
     void deleteLikes(@Param("articleId") Integer articleId,@Param("userId") Integer userId);
